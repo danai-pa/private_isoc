@@ -1,0 +1,18 @@
+cd /Users/de.danai/private_isoc
+
+python3 -m generators.gen_models_cli \
+  --db-key test \ ### เปลี่ยนตาม config
+  --schema public \ ### เลือก schema
+  --tables enlisted_personnel_type_2 \ 
+  --output generators/output/models_enlisted.py \
+  --overwrite
+
+
+ตัวอย่าง 
+
+python3 -m generators.gen_models_cli \
+  --db-key ISOC_SPP02 \ 
+  --schema public \ 
+  --tables enlisted_personnel_type_2 \ 
+  --output generators/output/models_enlisted.py \
+  --overwrite
