@@ -1,51 +1,23 @@
 import requests
 
-BASE = 'https://opendata.ddc.moph.go.th'
-# r = requests.get(f'{BASE}/api/3/action/package_list', timeout=30)
-# print("status:", r.status_code)
-# print("content-type:", r.headers.get("content-type"))
-# print("content-text:", r.text[:200])
+print("STEP 1: Call CKAN package_show API")
 
+api_url = "https://catalog-dga.data.go.th/th/api/3/action/package_show"
+params = {"id": "9443ffaa-8aa0-4922-93e5-a8c2374eb8d8"}
 
-dataset_id = "doed-01"
+data = requests.get(api_url, params=params, timeout=60).json()
 
-r = requests.get(
-    f"{BASE}/api/3/action/package_show",
-    params={"id": dataset_id},
-    timeout=30
-)
-print("status:", r.status_code)
-print("content-type:", r.headers.get("content-type"))
-d = r.json()
-# print("success:" , d.get("success"))
-result = d.get("result", {})
-print("title:", result.get("title"))
-resources = result.get("resources", [])
-# resources = {}
-# print("resources type:", type(resources))
-want = {"csv", "xls", "xlsx"}
-for i , v in enumerate(resources):
-    name=(v.get("name") or "").strip().lower()
-    fmt=(v.get("format") or "").strip().lower() 
-    url=(v.get("url") or "").strip().lower()
-    print(f"{i} name",': ',name)
-    print(f"{i} fmt",': ',fmt)
-    print(f"{i} url",': ',url)
+print("success =", data.get("success"))
 
-    if not url:
-        print("no url")
-        continue
-    
-    is_match = False
-    if fmt in want:
-        is_match = True
-        print("fmt", fmt)
-    else:
-        for w in want:
-            if w in url:
-                is_match = True
-                print("w", w)
-    # print("is_match:", is_match)
+result = data.get("result", {})
+print (type(result))
+for k , v in result.items():
+    print(k,":",v)
+# resources = result.get("resources", [])
+# print("resources =", type(resources))
+# print("dataset_name =", result.get("name"))
+# print("dataset_title =", result.get("title"))
+# print("num_resources =", result.get("num_resources"))
 
-
-
+# # ดู key ทั้งหมดของ result (ช่วยให้เข้าใจโครงสร้าง)
+# print("result_keys_sample =", list(result.keys())[:20])
