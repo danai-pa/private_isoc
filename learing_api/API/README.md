@@ -231,3 +231,30 @@ if res.status_code == 200:
     print(res.json())
 else:
     print("Error:", res.status_code, res.text)
+
+เช็คลิสต์เวลาหา URL/API จาก Inspect (Network)
+
+เปิด DevTools → Network → Fetch/XHR
+
+กด Preserve log แล้วกด Clear
+
+ทำ action ให้เว็บโหลดข้อมูล (ค้นหา/กดดาวน์โหลด/เปลี่ยนหน้า)
+
+คลิก request ที่สงสัย แล้วดู 3 อย่างนี้:
+
+Request URL (สำคัญสุด)
+
+Response (ถ้าเป็น JSON/CSV คือของจริง)
+
+Status code (200 = ผ่าน)
+
+ถ้าเป็น CKAN ให้จำ pattern นี้
+
+API: /api/3/action/...
+
+ไฟล์ดาวน์โหลด: /resource/<id>/download/...csv
+
+วิธีเร็วสุดให้ได้ “URL ดาวน์โหลดไฟล์”
+
+ใช้ package_show → เข้า result["resources"] → เอา resource["url"] มาใช้
+(เหมือนที่คุณทำกับ csv_url)
